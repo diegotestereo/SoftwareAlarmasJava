@@ -8,11 +8,11 @@ import org.omg.CosNaming.NamingContextExtPackage.AddressHelper;
 
 
 
-public class ConsultaDispoSQL extends JFrame{
+public class SoftwareAlarmasJava extends JFrame{
     
 	
 	
-     public   ConsultaDispoSQL()  {
+     public   SoftwareAlarmasJava()  {
 		
 		JFrame f =new JFrame();
 		f.setBounds(10,10, 500, 300);
