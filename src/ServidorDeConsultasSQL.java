@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -14,30 +15,22 @@ public class ServidorDeConsultasSQL  extends Thread {
 	 private  ServerSocket sk;
 	 private    BufferedReader entrada;
 	 private   PrintWriter salida;
-	 private static  Connection con=null;
+	 private  Connection con=null;
 	 private  int Puerto=5000;
 	 private  Boolean Serv=true;
 	 private String datos = null ;
 	 
-
-public ServidorDeConsultasSQL(){
+	 
+			
+public ServidorDeConsultasSQL(Connection con){
 	
+	this.con=con;
 	
 }
 	
 	
 public   void run() {
-	 try {
-			
-			System.out.println("Servidor de consultas: Conectando a la base de datos");
-			Class.forName("org.gjt.mm.mysql.Driver");//.newInstance();
-			 con =DriverManager.getConnection("jdbc:mysql://localhost/bdtemperaturas","root","");
-			System.out.println("Servidor de consultas: Se conecto !!!");
-			
-		} catch (Exception e) {
-			System.out.println("Servidor de consultas:No se puede conectar a la Base de Datos el servidor de Consultas");
-			System.out.println("Servidor de consultas:Error: "+e); 
-				}
+	 
 	   try {
 	          sk = new ServerSocket(Puerto);
 	          while (Serv) { 
@@ -68,11 +61,9 @@ public   void run() {
 						 exit=false;
 		            	   System.out.println("se recibio un 'X' ");
 		            	   salida.println("Conexion Cerrada");
-				             
-						break;
-						case "n":
-							 
-			            	   System.out.println("se recibio un null ");
+				     	break;
+					case "n":
+				      	   System.out.println("se recibio un null ");
 			            	    
 							break;
 					case "?":
@@ -80,19 +71,12 @@ public   void run() {
 		            	   System.out.println("consulta BD Temteraturas");
 		            	   salida.println("Servidor: Consulta por la BD de datos..");
 		            	   salida.println(ConsultarTempBD());
-		            	   
-		            	   
-		            	   
-						break;
+		       		break;
 					default:
 						break;
 					}
 	                 
-	                 
-	               
-	                
-	              
-	                 }while(exit);
+	              }while(exit);
 	                 cliente.close();
 	                 System.out.println("------------  Cerro sesion Cliente !!!  --------------------");
 	          }

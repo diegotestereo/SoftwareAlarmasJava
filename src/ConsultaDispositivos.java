@@ -21,55 +21,24 @@ public class ConsultaDispositivos extends Thread{
 	private  int IdDispo;
 	private  int Temp;
 		
-	
-	//public ConsultaDispositivos(Socket s,BufferedReader in, PrintStream out,int contador,Connection con,
-	//		Statement Statemento, String msgIn ,int IdDispo,int Temp,InsertSqlIdTemp InsertarIdTemp){
-	public ConsultaDispositivos(){	
-		/*this.s=s;
-		this.in=in;
-		this.out=out;
-		this.contador=contador;
-		this.con=con;
-		this.Statemento=Statemento;
-		this.msgIn=msgIn;
-		this.IdDispo=IdDispo;
-		this.Temp=Temp;
-		this.InsertarIdTemp=InsertarIdTemp;
 
-		*/
-		
+	public ConsultaDispositivos(Connection con){	
+	
+		this.con=con;
 	}
 	
 	
-	
-	
-	
-	
 	public  void run() {
-		// TODO Auto-generated method stub
-try {
-			
-			System.out.println("Consulta Dispositivos: Conectando a la base de datos");
-			Class.forName("org.gjt.mm.mysql.Driver").newInstance();
-			 con =DriverManager.getConnection("jdbc:mysql://localhost/bdtemperaturas","root","");
-			System.out.println("Consulta Dispositivos: Se conecto !!!");
-			
-		} catch (Exception e) {
-			System.out.println("Consulta Dispositivos:No se puede conectar a la Base de Datos");
-			System.out.println("Consulta Dispositivos:Error: "+e); 
-				}
-		
-		
-		
+				
 		System.out.println("******** Iniciando Cliente  *********");
 		
 		try {
 			
-			s = new Socket("192.168.0.200",9001);
-		//	s = new Socket("localhost",9001);
+		//	s = new Socket("192.168.0.200",9001);
+			s = new Socket("localhost",9001);
 			
 			System.out.println("Conexion Establecida: "+s.getInetAddress().getHostName());
-		
+			//String consulta ="INSERT INTO tablatemperaturas (IdDispositivo,Temp) VALUES ("+msgIdDispo+","+msgTemp+")";
 			in= new BufferedReader(new InputStreamReader(s.getInputStream()));
 			out= new PrintStream(s.getOutputStream());
 			
@@ -77,7 +46,7 @@ try {
 				++contador;
 				Thread.sleep(3000);
 				out.println("$001te#");
-				s.setSoTimeout(5000);
+			//	s.setSoTimeout(5000);
 				msgIn=in.readLine();
 				msgIdDispo=msgIn.substring(3, 6);
 				IdDispo=Integer.parseInt(msgIdDispo);
@@ -87,8 +56,9 @@ try {
 				
 				System.out.println(contador+" - Id Dispositivo: "+msgIdDispo+" Temperatura: "+msgTemp+" °C");
 			// almacenar informacion en BD	
+				
 				Statement Statemento =con.createStatement();
-				Statemento.execute("INSERT INTO temperaturas (IdDispositivo,Temp) VALUES ("+msgIdDispo+","+msgTemp+")");
+				Statemento.execute("INSERT INTO tablatemperaturas (IdDispositivo,Temp) VALUES ("+msgIdDispo+","+msgTemp+")");
 				Statemento.close();
 			
 			}
