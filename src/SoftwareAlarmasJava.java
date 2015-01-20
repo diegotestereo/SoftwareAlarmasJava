@@ -19,17 +19,10 @@ import Ventanas.VentanaPrincipal;;
 
 public class SoftwareAlarmasJava {
 
-	private static  Socket s ;
-	private static  BufferedReader in;
-	private  static PrintStream out;
-	private  int contador =0;
 	private static  Connection con=null;
-	private static  Statement Statemento;
-	private  String msgIn ,msgIdDispo,msgTemp;
-	private static  int IdDispo;
-	private  int Temp;
-	public static VentanaPrincipal ventanaP;
-	public static VentanaIngresoDispo ventanaInDisp;
+
+	static VentanaPrincipal ventanaP;
+	static VentanaIngresoDispo ventanaInDisp;
 	
 		
 	public static void main(String[] args){
@@ -37,8 +30,8 @@ public class SoftwareAlarmasJava {
 		// se crea y abre la ventana principal d el aplicacion
 		ventanaP=new VentanaPrincipal();
 		ventanaP.setVisible(true);
-		ventanaInDisp=new VentanaIngresoDispo();
-		
+		ventanaP.textAreaConsolaP.append("Iniciando Sistema...\n");
+	
 		
 		//Conexion a la base de datos
 		
@@ -59,7 +52,7 @@ public class SoftwareAlarmasJava {
 		ServerCon.start();
 		
 		// se crea  consultas de SQL y escritura
-		ConsultaDispositivos hiloConsulta= new ConsultaDispositivos(con);
+		ConsultaDispositivos hiloConsulta= new ConsultaDispositivos(con,ventanaP);
 		hiloConsulta.start();
 		
 		while(true){

@@ -6,18 +6,21 @@ import java.sql.Statement;
 
 import javax.swing.JTable;
 
+import Ventanas.VentanaIngresoDispo;
 import Ventanas.VentanaPrincipal;
 
 
 public class TablaDispositivos extends Thread{
 
 	 private  Connection con=null;
-	 private  VentanaPrincipal ventanaP;
+	 private  VentanaIngresoDispo ventanaDispo;
+	 private VentanaPrincipal ventanaP;
 	
-	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP){
-		
+	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP)//,VentanaIngresoDispo ventanaDispo){
+	{
 		this.con=con;
 		this.ventanaP=ventanaP;
+		//this.ventanaDispo=ventanaDispo;
 		
 	}
 	
@@ -28,6 +31,33 @@ public class TablaDispositivos extends Thread{
 		
 	}
 	
+	
+	public VentanaPrincipal getVentanaP() {
+		return ventanaP;
+	}
+
+	public void setVentanaP(VentanaPrincipal ventanaP) {
+		this.ventanaP = ventanaP;
+	}
+	
+	
+	
+	public Connection getCon() {
+		return con;
+	}
+
+	public void setCon(Connection con) {
+		this.con = con;
+	}
+
+	public VentanaIngresoDispo getVentanaDispo() {
+		return ventanaDispo;
+	}
+
+	public void setVentanaDispo(VentanaIngresoDispo ventanaDispo) {
+		this.ventanaDispo = ventanaDispo;
+	}
+
 	private  String ConsultarDispoBD() {
 		    
 		 
@@ -44,7 +74,7 @@ public class TablaDispositivos extends Thread{
 				 int Puerto =ResultadoConsulta.getInt(4);
 					
 				 Salida ="Dispositivo: "+Nomdispo+" Id: "+IdDispositivo+" Ip: "+IpDispo+" Puerto: "+Puerto;
-				//ventanaP.tableDispositivos.set
+				ventanaP.textAreaConsolaP.append(Salida+"\n");
 				 System.out.println(Salida);
 			 }
 				
@@ -56,30 +86,7 @@ public class TablaDispositivos extends Thread{
 			return Salida;
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 
 }
