@@ -1,17 +1,23 @@
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JTable;
+
+import Ventanas.VentanaPrincipal;
+
 
 public class TablaDispositivos extends Thread{
 
 	 private  Connection con=null;
-	 
-	 
-	public TablaDispositivos(Connection con){
+	 private  VentanaPrincipal ventanaP;
+	
+	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP){
 		
 		this.con=con;
+		this.ventanaP=ventanaP;
 		
 	}
 	
@@ -23,6 +29,7 @@ public class TablaDispositivos extends Thread{
 	}
 	
 	private  String ConsultarDispoBD() {
+		    
 		 
 			 String consulta ="SELECT * FROM tabladispositivos ";
 			 String Salida = null;
@@ -37,6 +44,7 @@ public class TablaDispositivos extends Thread{
 				 int Puerto =ResultadoConsulta.getInt(4);
 					
 				 Salida ="Dispositivo: "+Nomdispo+" Id: "+IdDispositivo+" Ip: "+IpDispo+" Puerto: "+Puerto;
+				//ventanaP.tableDispositivos.set
 				 System.out.println(Salida);
 			 }
 				

@@ -11,10 +11,13 @@ import java.sql.Statement;
 
 import javax.swing.*;
 
+import Ventanas.VentanaIngresoDispo;
+import Ventanas.VentanaPrincipal;;
 
 
 
-public class SoftwareAlarmasJava extends JFrame{
+
+public class SoftwareAlarmasJava {
 
 	private static  Socket s ;
 	private static  BufferedReader in;
@@ -25,41 +28,17 @@ public class SoftwareAlarmasJava extends JFrame{
 	private  String msgIn ,msgIdDispo,msgTemp;
 	private static  int IdDispo;
 	private  int Temp;
-	
-	
-	
-     /**
-	 * Sistemas de alarmas con JAVA
-	 * Estacion Terrena Balcarce
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private JLabel label1,label2;
-	
-	
-
-
-	public   SoftwareAlarmasJava()  {
-		setLayout(null);
-		label1=new JLabel("Sistema de Alarmas JAVA");
-		label1.setBounds(20,20, 300, 30);
-		add(label1);
-		label2=new JLabel("Version 0.1");
-		label2.setBounds(20,100, 100, 30);
-		add(label2);
-		
-		
-	}
-	
-
+	public static VentanaPrincipal ventanaP;
+	public static VentanaIngresoDispo ventanaInDisp;
 	
 		
 	public static void main(String[] args){
 	
-		SoftwareAlarmasJava Formulario = new SoftwareAlarmasJava();
-		Formulario.setBounds(0,0,300,200);
-		Formulario.setResizable(false);
-		//Formulario.setVisible(true);
+		// se crea y abre la ventana principal d el aplicacion
+		ventanaP=new VentanaPrincipal();
+		ventanaP.setVisible(true);
+		ventanaInDisp=new VentanaIngresoDispo();
+		
 		
 		//Conexion a la base de datos
 		
@@ -72,7 +51,7 @@ public class SoftwareAlarmasJava extends JFrame{
 			}
 		
 		// Levantar Tabla dispositivos configurados
-		TablaDispositivos levantarDispositivos=new TablaDispositivos(con);
+		TablaDispositivos levantarDispositivos=new TablaDispositivos(con,ventanaP);
 		levantarDispositivos.start();
 		
 		// se crea el servidor de consultas de dispositivos
@@ -115,24 +94,7 @@ try {
 		
 		
 		
-	/*	System.out.println("******** Iniciando Cliente  *********");
-		
-		
-			
-			try {
-			//	s = new Socket("192.168.0.200",9001);
-				s = new Socket("localhost",9001);
-				in= new BufferedReader(new InputStreamReader(s.getInputStream()));
-				out= new PrintStream(s.getOutputStream());
-				System.out.println("Conexion Establecida: "+s.getInetAddress().getHostName());
-			
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				System.out.println("No se pudo conectar al Dispositivo");
-			//	System.out.println("Error: " +e);
-			}
-		
-		*/
+	
 		
 	
 	
