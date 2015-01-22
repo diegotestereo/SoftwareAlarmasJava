@@ -8,19 +8,20 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Window.Type;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class VentanaPrincipal extends JFrame {
 
-	private JPanel contentPane;
+	public JPanel contentPane;
 	public JTextArea textAreaConsolaP;
+	public JTable tablaDispositivosP;
 	
 
 	public VentanaPrincipal() {
@@ -34,10 +35,13 @@ public class VentanaPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnAgregarDispos = new JButton("Agregar Dispositivos");
+		btnAgregarDispos.setBackground(new Color(173, 255, 47));
 		btnAgregarDispos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 VentanaIngresoDispo ventanaDispo=new VentanaIngresoDispo();
 				 ventanaDispo.setVisible(true);
+				JTable tabla= new JTable();
+				
 				
 			}
 		});
@@ -52,9 +56,30 @@ public class VentanaPrincipal extends JFrame {
 		textAreaConsolaP = new JTextArea();
 		scrollPane.setViewportView(textAreaConsolaP);
 		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 33, 373, 55);
+		contentPane.add(scrollPane_1);
+		
+		tablaDispositivosP = new JTable();
+		tablaDispositivosP.setBackground(new Color(238, 232, 170));
+		tablaDispositivosP.setModel(new DefaultTableModel(
+			new Object[][] {
+				{},
+			},
+			new String[] {
+			}
+		));
+		scrollPane_1.setViewportView(tablaDispositivosP);
+		
 		//Actualiza el scrollBar
 		DefaultCaret caret = (DefaultCaret)textAreaConsolaP.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
+	}
+
+
+	public TableModel tablaDispositivosP() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

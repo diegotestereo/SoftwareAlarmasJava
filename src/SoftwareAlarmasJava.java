@@ -23,6 +23,7 @@ public class SoftwareAlarmasJava {
 
 	static VentanaPrincipal ventanaP;
 	static VentanaIngresoDispo ventanaInDisp;
+	static JTable tabla;
 	
 		
 	public static void main(String[] args){
@@ -31,7 +32,7 @@ public class SoftwareAlarmasJava {
 		ventanaP=new VentanaPrincipal();
 		ventanaP.setVisible(true);
 		ventanaP.textAreaConsolaP.append("Iniciando Sistema...\n");
-	
+		tabla=ventanaP.tablaDispositivosP;
 		
 		//Conexion a la base de datos
 		
@@ -44,7 +45,7 @@ public class SoftwareAlarmasJava {
 			}
 		
 		// Levantar Tabla dispositivos configurados
-		TablaDispositivos levantarDispositivos=new TablaDispositivos(con,ventanaP);
+		TablaDispositivos levantarDispositivos=new TablaDispositivos(con,ventanaP,tabla);
 		levantarDispositivos.start();
 		
 		// se crea el servidor de consultas de dispositivos

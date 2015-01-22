@@ -4,7 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import Ventanas.VentanaIngresoDispo;
 import Ventanas.VentanaPrincipal;
@@ -15,15 +18,24 @@ public class TablaDispositivos extends Thread{
 	 private  Connection con=null;
 	 private  VentanaIngresoDispo ventanaDispo;
 	 private VentanaPrincipal ventanaP;
+	 private JTable tabla;
 	
-	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP)//,VentanaIngresoDispo ventanaDispo){
+	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP,JTable tabla)//,VentanaIngresoDispo ventanaDispo){
 	{
 		this.con=con;
 		this.ventanaP=ventanaP;
-		//this.ventanaDispo=ventanaDispo;
+		this.tabla=tabla;
 		
 	}
 	
+	public JTable getTabla() {
+		return tabla;
+	}
+
+	public void setTabla(JTable tabla) {
+		this.tabla = tabla;
+	}
+
 	public void run() {
 		
 		ConsultarDispoBD();
@@ -32,10 +44,6 @@ public class TablaDispositivos extends Thread{
 	}
 	
 	
-	public VentanaPrincipal getVentanaP() {
-		return ventanaP;
-	}
-
 	public void setVentanaP(VentanaPrincipal ventanaP) {
 		this.ventanaP = ventanaP;
 	}
@@ -63,18 +71,30 @@ public class TablaDispositivos extends Thread{
 		 
 			 String consulta ="SELECT * FROM tabladispositivos ";
 			 String Salida = null;
+			
+			
+			
+			 String[] columnas ={"Id","Nombre","Ip","Puerto"};
+			 DefaultTableModel tabla = new DefaultTableModel(null,columnas);
+			
 			 try {
 				Statement Statemento =con.createStatement();
 				ResultSet ResultadoConsulta=Statemento.executeQuery(consulta);
 				
 			 while(ResultadoConsulta.next()){
+				
 				 int IdDispositivo =ResultadoConsulta.getInt(1);
 				 String Nomdispo =ResultadoConsulta.getString(2);
 				 String IpDispo =ResultadoConsulta.getString(3);
 				 int Puerto =ResultadoConsulta.getInt(4);
-					
+				
 				 Salida ="Dispositivo: "+Nomdispo+" Id: "+IdDispositivo+" Ip: "+IpDispo+" Puerto: "+Puerto;
-				ventanaP.textAreaConsolaP.append(Salida+"\n");
+				
+				 String[] filas ={Integer.toString(IdDispositivo),Nomdispo,IpDispo,Integer.toString(Puerto)};
+			     tabla.addRow(filas);
+				 ventanaP.tablaDispositivosP.setModel(tabla);
+				
+				 ventanaP.textAreaConsolaP.append(Salida+"\n");
 				 System.out.println(Salida);
 			 }
 				
