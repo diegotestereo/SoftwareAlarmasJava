@@ -1,14 +1,6 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import javax.swing.*;
 
 import Ventanas.VentanaIngresoDispo;
@@ -23,6 +15,7 @@ public class SoftwareAlarmasJava {
 
 	static VentanaPrincipal ventanaP;
 	static VentanaIngresoDispo ventanaInDisp;
+	static InsertarDispositivos Almacenardispo;
 	static JTable tabla;
 	
 		
@@ -39,19 +32,27 @@ public class SoftwareAlarmasJava {
 	
 			try {
 				ConectarDB();
+				System.out.println("Se conecto a la base de datos !!");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				System.out.println("Error: "+e1);
 			}
 		
+			Almacenardispo= new InsertarDispositivos("Consola", "192.168.0.2", 9001);
+			Almacenardispo.InsertDispos();
+			
+			
 		// Levantar Tabla dispositivos configurados
-		TablaDispositivos levantarDispositivos=new TablaDispositivos(con,ventanaP,tabla);
+		TablaDispositivos levantarDispositivos=new TablaDispositivos(con,ventanaP);
 		levantarDispositivos.start();
+		
+		
 		
 		// se crea el servidor de consultas de dispositivos
 		ServidorDeConsultasSQL ServerCon =new ServidorDeConsultasSQL(con);
 		ServerCon.start();
 		
+
 		// se crea  consultas de SQL y escritura
 		ConsultaDispositivos hiloConsulta= new ConsultaDispositivos(con,ventanaP);
 		hiloConsulta.start();
@@ -86,12 +87,6 @@ try {
 			System.out.println("Consulta Dispositivos:Error: "+e); 
 				}
 		
-		
-		
-	
-		
-	
-	
  }
 	
 }

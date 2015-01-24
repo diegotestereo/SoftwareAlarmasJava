@@ -18,24 +18,26 @@ public class TablaDispositivos extends Thread{
 	 private  Connection con=null;
 	 private  VentanaIngresoDispo ventanaDispo;
 	 private VentanaPrincipal ventanaP;
-	 private JTable tabla;
+	 private String[] VectorDispositivosID;
 	
-	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP,JTable tabla)//,VentanaIngresoDispo ventanaDispo){
+	public String[] getVectorDispositivosID() {
+		return VectorDispositivosID;
+	}
+
+
+	public void setVectorDispositivosID(String[] vectorDispositivosID) {
+		VectorDispositivosID = vectorDispositivosID;
+	}
+
+
+	public TablaDispositivos(Connection con,VentanaPrincipal ventanaP)
 	{
 		this.con=con;
 		this.ventanaP=ventanaP;
-		this.tabla=tabla;
-		
+	
 	}
 	
-	public JTable getTabla() {
-		return tabla;
-	}
-
-	public void setTabla(JTable tabla) {
-		this.tabla = tabla;
-	}
-
+	
 	public void run() {
 		
 		ConsultarDispoBD();
@@ -79,11 +81,26 @@ public class TablaDispositivos extends Thread{
 			
 			 try {
 				Statement Statemento =con.createStatement();
+				
 				ResultSet ResultadoConsulta=Statemento.executeQuery(consulta);
+				int c=1;
+				//voya  la ultima
+				ResultadoConsulta.last();
+				// tomo la ultima 
+				int longitud =ResultadoConsulta.getRow();
+				System.out.println("Longitud "+ longitud);
+				//ubica la tabla antes del primer lugar
+				ResultadoConsulta.beforeFirst();
 				
 			 while(ResultadoConsulta.next()){
 				
 				 int IdDispositivo =ResultadoConsulta.getInt(1);
+				 // aca almaceno un vector con todos los id a consultar
+				 // es un vector de numero IDt
+				// VectorDispositivosID[c]=Integer.toString(IdDispositivo);
+				// System.out.println(IdDispositivo);
+				// System.out.println(c+" - ID:"+VectorDispositivosID[c]);
+				 
 				 String Nomdispo =ResultadoConsulta.getString(2);
 				 String IpDispo =ResultadoConsulta.getString(3);
 				 int Puerto =ResultadoConsulta.getInt(4);
@@ -96,6 +113,7 @@ public class TablaDispositivos extends Thread{
 				
 				 ventanaP.textAreaConsolaP.append(Salida+"\n");
 				 System.out.println(Salida);
+			 c++;
 			 }
 				
 				Statemento.close();

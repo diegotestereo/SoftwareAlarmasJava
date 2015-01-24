@@ -5,7 +5,6 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -20,10 +19,7 @@ public class ConsultaDispositivos extends Thread{
 	
 
 	private  Connection con=null;
-	private  Statement Statemento;
 	private  String msgIn ,msgIdDispo,msgTemp;
-	private  int IdDispo;
-	private  int Temp;
 	private VentanaPrincipal ventanaP;
 
 	public ConsultaDispositivos(Connection con,VentanaPrincipal ventanaP){	
@@ -77,9 +73,9 @@ public class ConsultaDispositivos extends Thread{
 				s.setSoTimeout(5000);
 				msgIn=in.readLine();
 				msgIdDispo=msgIn.substring(3, 6);
-				IdDispo=Integer.parseInt(msgIdDispo);
+				Integer.parseInt(msgIdDispo);
 				msgTemp=msgIn.substring(9, 11);
-				Temp=Integer.parseInt(msgTemp);
+				Integer.parseInt(msgTemp);
 				System.out.println();
 				String mensaje =new String(contador+" - Id Dispositivo: "+msgIdDispo+" Temperatura: "+msgTemp+" °C\n");
 				System.out.println(mensaje);
