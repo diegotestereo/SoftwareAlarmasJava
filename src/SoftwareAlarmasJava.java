@@ -38,8 +38,8 @@ public class SoftwareAlarmasJava {
 				System.out.println("Error: "+e1);
 			}
 		
-			Almacenardispo= new InsertarDispositivos("Consola", "192.168.0.2", 9001);
-			Almacenardispo.InsertDispos();
+		//	Almacenardispo= new InsertarDispositivos("Consola", "192.168.0.2", 9001);
+		//	Almacenardispo.InsertDispos();
 			
 			
 		// Levantar Tabla dispositivos configurados
